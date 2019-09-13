@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import Carousel from 'react-native-snap-carousel';
+import { Component} from 'react-native';
+
 
 export class MyCarousel extends Component {
 
@@ -9,6 +11,16 @@ export class MyCarousel extends Component {
             </View>
         );
     }
-};
 
-export default MyCarousel;
+    render () {
+        return (
+            <Carousel
+              ref={(c) => { this._carousel = c; }}
+              data={this.state.entries}
+              renderItem={this._renderItem}
+              sliderWidth={sliderWidth}
+              itemWidth={itemWidth}
+            />
+        );
+    }
+}

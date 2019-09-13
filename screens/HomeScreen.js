@@ -10,9 +10,12 @@ import {
   View,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-// import Carousel from 'react-native-snap-carousel';
-// import { MonoText } from '../components/StyledText';
+import { Card, Button } from 'react-native-elements';
+import { Rating } from 'react-native-elements';
 
+
+import MyCarousel from '../components/MyCarousel';
+// import { MonoText } from '../components/StyledText';
 
 export default function HomeScreen() {
   return (
@@ -39,23 +42,26 @@ export default function HomeScreen() {
             }
             style={styles.welcomeImage}
           />
+      <MyCarousel>
+        <Card
+          title='Rockwood Music Hall'
+          image={require('../assets/images/venues/Rockwood/Rockwood1.jpg')}>
+          <Rating
+            type='custom'
+            onFinishRating={this.ratingCompleted}
+            ratingColor='#000'
+            ratingTextColor='#000'
+            imageSize={20}
+            style={{ paddingVertical: 10 }}
+          />
+          <Button
+            buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+            title='VIEW MORE' />
+        </Card>
+      </MyCarousel>
         </View>
-        {/* <Carousel
-              ref={(c) => { this._carousel = c; }}
-              data={this.state.entries}
-              renderItem={this._renderItem}
-              sliderWidth={sliderWidth}
-              itemWidth={itemWidth}
-            /> */}
-        {/* <View style={styles.getStartedContainer}>
-          {/* <DevelopmentModeNotice /> */}
-          {/* <Text style={styles.getStartedText}>
-            Musability
-          </Text> */}
 
-          {/* <Text style={styles.getStartedText}>A free-wheelin’ community to find accessible venues for music lovers. Made for you by you</Text> */}
 
-        {/* </View> */}
       </ScrollView>
 
       {/* <View style={styles.tabBarInfoContainer}>
@@ -128,6 +134,7 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     textAlign: 'center',
   },
+
   contentContainer: {
     paddingTop: 10,
   },
@@ -147,6 +154,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 50,
   },
+  
   homeScreenFilename: {
     marginVertical: 7,
   },
@@ -211,3 +219,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#808080',
   },
 });
+
+
+
+
+        {/* <View style={styles.getStartedContainer}>
+          {/* <DevelopmentModeNotice /> */}
+          {/* <Text style={styles.getStartedText}>
+            Musability
+          </Text> */}
+
+          {/* <Text style={styles.getStartedText}>A free-wheelin’ community to find accessible venues for music lovers. Made for you by you</Text> */}
+
+        {/* </View> */}
