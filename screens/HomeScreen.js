@@ -14,8 +14,9 @@ import Carousel from 'react-native-snap-carousel';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Card, Button } from 'react-native-elements';
 import { Rating } from 'react-native-elements';
-import VenueCarousel from '../components/VenueCarousel';
-// import { MonoText } from '../components/StyledText';
+
+const MUSIC_IMAGE = require('../assets/images/musicnote.png');
+
 export default class HomeScreen extends Component {
   _renderItem ({item, index}) {
     return (
@@ -23,20 +24,23 @@ export default class HomeScreen extends Component {
         <Text>
         {item.title}
         </Text>
-        <Card
-          title='Rockwood Music Hall'
-          image={require('../assets/images/venues/Rockwood/Rockwood1.jpg')}>
+        <Card containerStyle={{ borderRadius: 20 }}
+
+          image={require('../assets/images/venues/Rockwood/Rockwood1.jpg')}
+          title='Rockwood Music Hall'>
           <Rating
             type='custom'
+            ratingImage={MUSIC_IMAGE}
             onFinishRating={this.ratingCompleted}
-            ratingColor='#000'
-            ratingTextColor='#000'
+            ratingColor='#800022'
+            ratingBackgroundColor='#c8c7c8'
+            ratingCount={5}
             imageSize={20}
             style={{ paddingVertical: 10 }}
           />
-          <Button
-            buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-            title='VIEW MORE' />
+          {/* <Button
+            buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: '#800022' }}
+            title='VIEW MORE' /> */}
         </Card>
       </View>
     )
@@ -49,13 +53,13 @@ export default class HomeScreen extends Component {
           contentContainerStyle={styles.contentContainer}>
           <View style={styles.welcomeContainer}>
           <LinearGradient
-            colors={['rgba(0,0,0,1)', 'transparent']}
+            colors={['rgba(255, 255, 255, 4)','transparent']}
             style={{
               position: 'absolute',
               left: 0,
               right: 0,
-              top: 0,
-              height: 300,
+              top: -30,
+              height: 600,
             }}
           />
             <Image
@@ -73,7 +77,7 @@ export default class HomeScreen extends Component {
           return this._renderItem(args);
         }}
         sliderWidth={Dimensions.get('window').width}
-        itemWidth={Dimensions.get('window').width}
+        itemWidth={Dimensions.get('window').width-50}
         layout={'stack'}
         layoutCardOffset={'18'}
         />
@@ -135,7 +139,10 @@ export default class HomeScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#851414',
+    backgroundColor: '#800022',
+  },
+  venueCard: {
+    borderRadius: 25,
   },
   developmentModeText: {
     marginBottom: 20,
@@ -156,7 +163,7 @@ const styles = StyleSheet.create({
     width: 250,
     height: 300,
     resizeMode: 'contain',
-    marginTop: -30,
+    marginTop: -70,
     marginLeft: 160,
   },
   getStartedContainer: {
@@ -222,8 +229,8 @@ const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
     paddingTop: 15,
-    height: 250,
-    width: 150,
+    height: 200,
+    width: 100,
     backgroundColor: '#808080',
   },
 });
