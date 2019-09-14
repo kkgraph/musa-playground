@@ -1,5 +1,5 @@
 import * as WebBrowser from 'expo-web-browser';
-import React from 'react';
+import React, { Component } from 'react';
 import {
   Image,
   Platform,
@@ -8,41 +8,21 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Dimensions
 } from 'react-native';
+import Carousel from 'react-native-snap-carousel';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Card, Button } from 'react-native-elements';
 import { Rating } from 'react-native-elements';
-
-
-import MyCarousel from '../components/MyCarousel';
+import VenueCarousel from '../components/VenueCarousel';
 // import { MonoText } from '../components/StyledText';
-
-export default function HomeScreen() {
-  return (
-    <View style={styles.container}>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}>
-        <View style={styles.welcomeContainer}>
-        <LinearGradient
-          colors={['rgba(0,0,0,1)', 'transparent']}
-          style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            top: 0,
-            height: 300,
-          }}
-        />
-          <Image
-            source={
-              __DEV__
-                ? require('../assets/images/musability-app.png')
-                : require('../assets/images/musability-app.png')
-            }
-            style={styles.welcomeImage}
-          />
-      <MyCarousel>
+export default class HomeScreen extends Component {
+  _renderItem ({item, index}) {
+    return (
+      <View>
+        <Text>
+        {item.title}
+        </Text>
         <Card
           title='Rockwood Music Hall'
           image={require('../assets/images/venues/Rockwood/Rockwood1.jpg')}>
@@ -58,70 +38,100 @@ export default function HomeScreen() {
             buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
             title='VIEW MORE' />
         </Card>
-      </MyCarousel>
-        </View>
-
-
-      </ScrollView>
-
-      {/* <View style={styles.tabBarInfoContainer}>
-      <LinearGradient
-          colors={['rgba(0,0,0,0.8)', 'transparent']}
-          style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            top: 0,
-            height: 300,
-          }}
-        />
-        <Text style={styles.tabBarInfoText}>
-          Tab bar
-        </Text>
-      </View> */}
-    </View>
-  );
-}
-
-HomeScreen.navigationOptions = {
-  header: null,
-};
-
-function DevelopmentModeNotice() {
-  if (__DEV__) {
-    const learnMoreButton = (
-      <Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
-        Learn more
-      </Text>
-    );
-
-    return (
-      <Text style={styles.developmentModeText}>
-        Development mode is enabled: your app will be slower but you can use
-        useful development tools. {learnMoreButton}
-      </Text>
-    );
-  } else {
-    return (
-      <Text style={styles.developmentModeText}>
-        You are not in development mode: your app will run at full speed.
-      </Text>
-    );
+      </View>
+    )
   }
-}
-
-function handleLearnMorePress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/workflow/development-mode/'
+  render () {
+    return (
+      <View style={styles.container}>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}>
+          <View style={styles.welcomeContainer}>
+          <LinearGradient
+            colors={['rgba(0,0,0,1)', 'transparent']}
+            style={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              top: 0,
+              height: 300,
+            }}
+          />
+            <Image
+              source={
+                __DEV__
+                  ? require('../assets/images/musability-app.png')
+                  : require('../assets/images/musability-app.png')
+              }
+              style={styles.welcomeImage}
+            />
+        <Carousel
+        ref={(c) => { this._carousel = c; }}
+        data={[{title:"1"}, {title: "2"}, {title: "3"}]}
+        renderItem={(args)=>{
+          return this._renderItem(args);
+        }}
+        sliderWidth={Dimensions.get('window').width}
+        itemWidth={Dimensions.get('window').width}
+        layout={'stack'}
+        layoutCardOffset={'18'}
+        />
+          </View>
+        </ScrollView>
+        {/* <View style={styles.tabBarInfoContainer}>
+        <LinearGradient
+            colors={['rgba(0,0,0,0.8)', 'transparent']}
+            style={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              top: 0,
+              height: 300,
+            }}
+          />
+          <Text style={styles.tabBarInfoText}>
+            Tab bar
+          </Text>
+        </View> */}
+      </View>
   );
 }
-
-function handleHelpPress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/workflow/up-and-running/#cant-see-your-changes'
-  );
 }
-
+// HomeScreen.navigationOptions = {
+//   header: null,
+// };
+// function DevelopmentModeNotice() {
+//   if (__DEV__) {
+//     const learnMoreButton = (
+//       <Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
+//         Learn more
+//       </Text>
+//     );
+//     return (
+//       <Text style={styles.developmentModeText}>
+//         Development mode is enabled: your app will be slower but you can use
+//         useful development tools. {learnMoreButton}
+//       </Text>
+//     );
+//   } else {
+//     return (
+//       <Text style={styles.developmentModeText}>
+//         You are not in development mode: your app will run at full speed.
+//       </Text>
+//     );
+//   }
+// }
+// function handleLearnMorePress() {
+//   WebBrowser.openBrowserAsync(
+//     'https://docs.expo.io/versions/latest/workflow/development-mode/'
+//   );
+// }
+// function handleHelpPress() {
+//   WebBrowser.openBrowserAsync(
+//     'https://docs.expo.io/versions/latest/workflow/up-and-running/#cant-see-your-changes'
+//   );
+// }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -134,7 +144,6 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     textAlign: 'center',
   },
-
   contentContainer: {
     paddingTop: 10,
   },
@@ -154,7 +163,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 50,
   },
-  
   homeScreenFilename: {
     marginVertical: 7,
   },
@@ -219,16 +227,3 @@ const styles = StyleSheet.create({
     backgroundColor: '#808080',
   },
 });
-
-
-
-
-        {/* <View style={styles.getStartedContainer}>
-          {/* <DevelopmentModeNotice /> */}
-          {/* <Text style={styles.getStartedText}>
-            Musability
-          </Text> */}
-
-          {/* <Text style={styles.getStartedText}>A free-wheelin’ community to find accessible venues for music lovers. Made for you by you</Text> */}
-
-        {/* </View> */}
